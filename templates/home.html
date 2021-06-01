@@ -1,10 +1,11 @@
-{% extends "base.html" %}
+{% extends "base_footer_general.html" %}
 
 {% block title %}
 Homepage
 {% endblock %}
 
 {% block content_area %}
+<div class="content bg-{{bg_color}} text-{{text_color}} ">
     <h1>This is an Test-environment for tests on personalization of Websites</h1>
     <h2> Here is some more information about it:</h2>
     <p> Some information</p>
@@ -12,6 +13,5 @@ Homepage
     <li> E-Commerce</li>
     <li> Search-engine</li>
     <li> News-page</li>
+</div>
 {% endblock %}
-
-

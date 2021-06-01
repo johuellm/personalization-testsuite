@@ -53,7 +53,7 @@ Fill the E-Commerce Website Table with data from
 https://www.kaggle.com/datafiniti/electronic-products-prices
 which is included in the file /data/DatafinitiElectronicsProductsPricingData.csv 
 """
-with open("DatafinitiElectronicsProductsPricingData.csv", encoding="utf8") as file:
+with open("products.csv", encoding="utf8") as file:
     data = csv.DictReader(file)
     data_dict = [{'name': product['name'],
                   'price': product['prices.amountMax'],
@@ -121,7 +121,7 @@ kaggle.com/snapcrack/all-the-news?select=articles3.csv
 Only using the articles3.csv
 """
 
-with open("articles3.csv", encoding="utf8") as file:
+with open("articles.csv", encoding="utf8") as file:
     articles = pd.read_csv(file)
     articles_to_db = [{'article_title': row['title'],
                        'newspaper': row['publication'],

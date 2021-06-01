@@ -1,0 +1,47 @@
+{% extends base %}
+
+{%block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/e_commerce.css') }}">
+{% endblock %}
+
+
+{% block title %}
+E-Commerce Webpage
+{% endblock %}
+
+{% block content_area %}
+
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt1sKhkZYBWJntas9_61e8aYWtvtkJP3kZ3Q&usqp=CAU" class="img-fluid px-0" alt="Responsive image">
+
+
+<div class="bg-{{bg_color}} text-{{text_color}}">
+<h2>Products for You!</h2>
+
+
+{% for row in products|batch(2)%}
+    <div class="card-group bg-{{bg_color}} text-{{text_color}}">
+      {% for product in row %}
+        <div class="card mb-3 bg-{{bg_color}} text-{{text_color}}" >
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src={{product[-2].split(",")[0]}} class="card-img-top img-responsive" alt={{product[-2].split(",")[-1]}}>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{product[1]}} </h5>
+                <p class="card-text"> {{product[2]}} {{product[4]}}</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+{% endfor %}
+</div>
+
+
+
+{% endblock %}
+
+
