@@ -22,15 +22,15 @@ E-Commerce Webpage
     <div class="card-group bg-{{bg_color}}">
       {% for product in row %}
         <div class="card bg-{{bg_color}} mb-4">
-          <img class="card-img-top" src={{product[-2].split(",")[0]}} alt={{product[-2].split(",")[-1]}}>
+          <img class="card-img-top" src={{product["img_url"]}} alt={{product["img_alt_url"]}}>
           <div class="card-body">
-            <h5 class="card-title">{{product[1]}}</h5>
+            <h5 class="card-title">{{product["title"]}}</h5>
             <!--<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-            <p class="card-price">{{product[2]}} {{product[4]}}</p>
-            <a href="{{product[6]}}" class="btn btn-primary">{{product[5]}}</a>
+            <p class="card-price">{{product["price"]}}</p>
+            <a href={{product["retailer_url"]}} class="btn btn-primary">{{product["retailer"]}}</a>
           </div>
           <div class="card-footer">
-            <small class="text-muted">Only 3 Left in Stock!</small>
+            <small class="text-muted">{{product["tags"]}}</small>
           </div>
         </div>
       {% endfor %}

@@ -40,10 +40,12 @@ class UserRecognition:
             return fp_user
 
         # Case 3: User can be recognized by his IP
-        print("case 3")
-        ip_user = Data().get_user(ip, "ip_address")
-        if ip_user is not None:
-            return ip_user
+        use_ip = False
+        if use_ip:
+            print("case 3")
+            ip_user = Data().get_user(ip, "ip_address")
+            if ip_user is not None:
+                return ip_user
 
         # Case 4: New User
         print("case 4")

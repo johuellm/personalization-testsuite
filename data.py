@@ -44,7 +44,7 @@ class Data:
             self.c.execute("Select website_id From website Where template_path == '{}'".format(template))
             return self.c.fetchone()
 
-    def new_user(self):
+    def new_user(self, target_group=randint(0, 10)):
         """
         Function to create a new user entry
         :return: the user_id of the just created user
@@ -56,7 +56,7 @@ class Data:
                     ) VALUES (
                      Null, Null, Null, Null,
                      Null, Null, Null, {}
-                     )""".format(randint(0,10)))
+                     )""".format(target_group))
             self.c.execute("Select user_id From user Order By user_id DESC")
             print("new_user")
             return self.c.fetchone()[0]
@@ -204,6 +204,6 @@ class Data:
 
 if __name__ == "__main__":
     Data().insert_session(2, 3)
-    #print(Data().new_user())
-    print(Data().inspect_table('user', number_of_rows=15))
+    # print(Data().new_user())
+    print(Data().inspect_table('product', number_of_rows=15))
     print(Data().get_target_group(11))

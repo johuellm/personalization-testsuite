@@ -2,8 +2,7 @@
 Test-environment
 Todo:-Empty Session Entry for e_commerce
 Todo:-User Target group is None/user not found
-Todo:-cols are not working if specified in url
-Todo:-color based on time
+Todo:-Additional base layout with sidebar
 """
 from flask import Flask, request, redirect, url_for, render_template, session, make_response
 from datetime import timedelta, datetime
@@ -46,8 +45,8 @@ def redirect():
 @app.route("/ecommerce/<parameter>")
 def ecommerce(parameter):
     user_recognition(request)
-    response = PageContent().generate_e_commerce_content(parameter, user=session["user"], request=request)
-    response.set_cookie("user", session["user"], expires=datetime.now() + timedelta(minutes=90))
+    response = PageContent().generate_content(parameter, user=session["user"],
+                                              request=request, wtype="e-commerce")
     return response
 
 
