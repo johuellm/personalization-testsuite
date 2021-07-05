@@ -1,3 +1,9 @@
+"""
+Todo: adjust getting the target group getting from the DB for a new user
+Todo: reduce User attributes
+Todo: ggf restructure product table so that a product can have multiple target groups
+Todo:limited product data -> list index out of range
+"""
 import sqlite3
 from datetime import datetime
 from ip2geotools.databases.noncommercial import DbIpCity
@@ -44,9 +50,10 @@ class Data:
             self.c.execute("Select website_id From website Where template_path == '{}'".format(template))
             return self.c.fetchone()
 
-    def new_user(self, target_group=randint(0, 10)):
+    def new_user(self, target_group):
         """
         Function to create a new user entry
+        :param target_group: target group of the new user
         :return: the user_id of the just created user
         """
         with self.conn:
@@ -57,8 +64,10 @@ class Data:
                      Null, Null, Null, Null,
                      Null, Null, Null, {}
                      )""".format(target_group))
+            #print(uid)
             self.c.execute("Select user_id From user Order By user_id DESC")
             print("new_user")
+            #print(self.c.fetchone()[0])
             return self.c.fetchone()[0]
 
     def get_user(self, value, column):
@@ -164,7 +173,7 @@ class Data:
                 'browser_fp': browser_fp,
                 'ip_address': ip_address
              }
-
+        print(session_data)
         with self.conn:
             self.c.execute("""INSERT INTO session (
                 website_id, user_id, language, device, location, timestamp, browser_fp, ip_address
@@ -187,23 +196,36 @@ class Data:
         ip = request.remote_addr
         language = request.accept_languages[0][0]
         fingerprint = hash(ua + ip + language)
-        """TODO: flask may be able to parse the user agent as well """
         device = parse(ua).device.family
         try:
             location = DbIpCity.get(ip, api_key='free').country
         except KeyError:
             location = None
-        except:
+        except Exception as e:
+            print(f"Internal Exception for calculating the Location: {e}")
             location = None
         website_id = self.get_website_id(template)[0]
         self.insert_session(
-            website_id=website_id, user_id=user, language=None, device=device, location=location,
+            website_id=website_id, user_id=user, language=language, device=device, location=location,
             browser_fp=fingerprint, ip_address=ip
         )
 
 
 if __name__ == "__main__":
+    """
     Data().insert_session(2, 3)
     # print(Data().new_user())
-    print(Data().inspect_table('product', number_of_rows=15))
-    print(Data().get_target_group(11))
+    print(Data().inspect_table('user', number_of_rows=15))
+    print(Data().get_target_group(32))
+    print(Data().get_target_group(33))
+    print(Data().get_target_group(34))
+    """
+    x = Data().new_user(randint(0, 10))
+    print(Data().get_target_group(x))
+    print(x)
+
+    print(len(Data().inspect_table('product', number_of_rows=10000)))
+    print(len(Data().get_products(25, 1000)))
+
+
+
