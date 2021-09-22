@@ -1,8 +1,8 @@
 """
-Test-environment
+Test-environment main class
 """
 from flask import Flask, request, redirect, url_for, render_template, session
-from datetime import timedelta, datetime
+from datetime import timedelta
 from user_recognition import UserRecognition
 from data import Data
 from content import PageContent
@@ -35,19 +35,16 @@ def home():
     """
     user_recognition(request, parameter=None)
     Data().create_session_entry(request, int(session["user"]), "home.html")
-    return render_template("home.html", base="base.html", bg_color="light", text_color="black")
+    # there is no Home page implemented yet, therefore it automatically redirects to the ecommerce page
+    return redirect(url_for("ecommerce"))
+    #return render_template("home.html", base="base.html", bg_color="light", text_color="black")
 
-
-@app.route("/redirect")
-def redirect():
-    return redirect(url_for("home"))
 
 
 @app.route("/ecommerce", defaults={'parameter': None})
 @app.route("/ecommerce/<parameter>")
 def ecommerce(parameter):
     user_recognition(request, parameter)
-    print(Data().get_user(session["user"], "user_id"))
     response = PageContent().generate_content(parameter, user=session["user"],
                                               request=request, wtype="e-commerce")
     return response
@@ -59,7 +56,7 @@ def search_engine(parameter):
     template = "search_engine.html"
     user_recognition(request, parameter)
     content = parameter
-    return render_template("search_engine.html", content=content)
+    return render_template(template, content=content)
 
 
 @app.route("/news-page", defaults={'parameter': None})
@@ -68,7 +65,7 @@ def news_page(parameter):
     template = "news_page.html"
     user_recognition(request, parameter)
     content = parameter
-    return render_template("news_page.html", content=content)
+    return render_template(template, content=content)
 
 
 @app.route("/user")

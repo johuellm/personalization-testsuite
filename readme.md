@@ -21,6 +21,9 @@ Before using the environment the following steps need to be carried out:
 1. install packages of the ```requirements.txt```
 2. run ```create_db.py``` and ```fill_db.py```
 
+Disclaimer!: This Test is a prototype which is meant to run locally. The Database implementation is not Secure!
+Also be aware that after resetting the DB, the already existing browser cookies must also be deleted from the web storage
+
 
 ### Starting the Environment
 
@@ -62,9 +65,21 @@ Configurations are consisting of a key and a value. The key references one eleme
 |Already used User| user     | number (user id) |
 |Target Group| tg       | number (id of a target group) |
 |Price | price    | s,d,p |
+|Content| content| s,d,p|
 |Product tags| tag | s,d,p|
 |User location|location| s,d,p|
 |Default value for all above Elements except user and target group| default | s,d,p|
+
+User Recognition Configurations:
+
+By default recognition is based on cookies and the recognition by browser finerprint and ip is turned off (recognition by ip has not been tested)
+
+| Element      | Key      | Value    |
+| --------     | -------- | -------- | 
+|Recognition by Cookies| cookie      | t,f  |
+|Recognition by Browser Fingerprint| bfp       | t ,f  |
+|Recognition by IP| ip    | t,f | 
+|Making all users new users  | newuser   | t,f|
 
 Values:
 
@@ -74,6 +89,8 @@ Values:
 | s         | Static Element     | 
 | d | dynamic (randomized) element |
 | p | personalized element|
+| t | True |
+| f | False |
 |number | integer (meaning dependend on key) |
 |dark| dark color-scheme|
 |light|light color-scheme|
